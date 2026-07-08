@@ -1,0 +1,32 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  scan-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Secret scan (gitleaks)
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Brand-asset scan
+        run: |
+          set -e
+          PATTERNS='Darwin_v3|primate-intelligence-logo|primate-vision-logo|logo-dark\.svg'
+          if git grep -IlE "$PATTERNS" -- . ':!/.github/workflows/ci.yml'; then
+            echo "::error::Brand asset reference found — Primate brand assets must not enter public repos."
+            exit 1
+          fi
+          if find . -path ./node_modules -prune -o -type f \( -name '*Darwin*' -o -name '*primate*logo*' \) -print | grep -q .; then
+            echo "::error::Brand asset file found."
+            exit 1
+          fi
+          echo "Brand scan clean."
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - run: npm run build
+      - run: npm test

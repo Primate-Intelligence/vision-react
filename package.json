@@ -1,0 +1,27 @@
+{
+  "name": "@primate-intelligence/vision-react",
+  "version": "0.0.1",
+  "description": "React components and headless hooks for the Primate Vision public API (upload, analyses, streams).",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": ["dist", "NOTICE"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Primate-Intelligence/vision-react.git"
+  },
+  "homepage": "https://primateintelligence.ai/docs",
+  "keywords": ["video", "computer-vision", "video-analysis", "react", "primate-vision"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "echo 'skeleton: no tests yet' && exit 0"
+  },
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0",
+    "@types/react": "^18.3.0"
+  }
+}
