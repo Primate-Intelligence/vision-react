@@ -41,7 +41,7 @@ export function useAnalysis(opts: UseAnalysisOptions = {}) {
     async (id: string) => {
       if (activeIdRef.current !== id) return; // superseded
       try {
-        const analysis = await client.analyses.get(id);
+        const analysis = await client.analyses.retrieve(id);
         if (activeIdRef.current !== id) return;
         if (TERMINAL.has(analysis.status)) {
           setState({ status: analysis.status as 'completed' | 'failed' | 'canceled', analysis });
@@ -94,7 +94,7 @@ export function useAnalysis(opts: UseAnalysisOptions = {}) {
       setState({ status: 'canceled', analysis });
     } catch {
       // Cancel raced completion — refresh the terminal state.
-      const analysis = await client.analyses.get(id).catch(() => null);
+      const analysis = await client.analyses.retrieve(id).catch(() => null);
       if (analysis && TERMINAL.has(analysis.status)) {
         setState({ status: analysis.status as 'completed' | 'failed' | 'canceled', analysis });
       }

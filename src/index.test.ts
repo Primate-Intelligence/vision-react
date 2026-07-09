@@ -29,11 +29,11 @@ describe('@primate-intelligence/vision-react surface', () => {
     const fake: VisionClient = {
       videos: {
         upload: async () => ({ id: 'video_x' } as never),
-        get: async () => ({ id: 'video_x' } as never),
+        retrieve: async () => ({ id: 'video_x' } as never),
       },
       analyses: {
         create: async () => ({ id: 'analysis_x' } as never),
-        get: async () => ({ id: 'analysis_x' } as never),
+        retrieve: async () => ({ id: 'analysis_x' } as never),
         cancel: async () => ({ id: 'analysis_x' } as never),
       },
     };

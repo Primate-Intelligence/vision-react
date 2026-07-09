@@ -17,7 +17,7 @@ export interface ErrorObject {
 
 // ── Videos (§13.1, §14.1) ─────────────────────────────────────────────────────
 
-export type VideoStatus = 'awaiting_upload' | 'processing' | 'ready' | 'failed';
+export type VideoStatus = 'awaiting_upload' | 'uploading' | 'processing' | 'ready' | 'failed';
 
 export interface VideoUpload {
   method: 'PUT';
