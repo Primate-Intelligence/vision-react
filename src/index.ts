@@ -1,52 +1,29 @@
 /**
- * @primate-intelligence/vision-react — pre-release skeleton.
+ * @primate-intelligence/vision-react — React hooks + components for the
+ * Primate Vision public API.
  *
- * Types below mirror the Public API v1 design (resource contracts §13,
- * state machines §14). They will move to the generated SDK when it ships;
- * this package will then re-export and build on them.
+ *   import { Primate } from '@primate-intelligence/sdk/browser';
+ *   import { PrimateProvider, useVideoAnalysis } from '@primate-intelligence/vision-react';
+ *
+ *   const client = new Primate({ authToken: () => mintClientToken() });
+ *   <PrimateProvider client={client}>
+ *     <App />
+ *   </PrimateProvider>
+ *
+ * Reference app: https://github.com/Primate-Intelligence/primate-vision-client
  */
+export { PrimateProvider, usePrimateClient, useTelemetry, noopTelemetry } from './provider';
+export type { Telemetry } from './provider';
+export type { VisionClient } from './client';
+export * from './resources';
+export { useVideoUpload } from './hooks/useVideoUpload';
+export type { UploadState } from './hooks/useVideoUpload';
+export { useAnalysis } from './hooks/useAnalysis';
+export type { AnalysisState, UseAnalysisOptions } from './hooks/useAnalysis';
+export { useVideoAnalysis } from './hooks/useVideoAnalysis';
+export { AnalysisProgress } from './components/AnalysisProgress';
+export type { AnalysisProgressProps } from './components/AnalysisProgress';
+export { ClipsTimeline } from './components/ClipsTimeline';
+export type { ClipsTimelineProps } from './components/ClipsTimeline';
 
-/** Canonical analysis lifecycle (public API v1 §14). */
-export type AnalysisStatus =
-  | "queued"
-  | "preparing"
-  | "analyzing"
-  | "rendering"
-  | "completed"
-  | "failed"
-  | "canceled";
-
-/** Canonical video lifecycle (public API v1 §14.1). */
-export type VideoStatus = "awaiting_upload" | "processing" | "ready" | "failed";
-
-/** Canonical stream lifecycle (public API v1 §4.8). */
-export type StreamStatus = "queued" | "ready" | "live" | "ended";
-
-export interface AnalysisResult {
-  answer: "yes" | "no" | "indeterminate";
-  confidence: number;
-  clips: Array<{
-    start_s: number;
-    end_s: number;
-    confidence: number;
-    terms: Record<string, number>;
-  }>;
-  term_confidences: Record<string, number>;
-  query_type: string;
-  video_duration_s: number;
-}
-
-export interface Analysis {
-  id: string;
-  object: "analysis";
-  status: AnalysisStatus;
-  video_id: string;
-  model: string;
-  prompt?: string;
-  result?: AnalysisResult;
-  created_at: string;
-  completed_at?: string;
-}
-
-/** Placeholder export so the package is importable pre-v0.1. */
-export const VERSION = "0.0.1";
+export const VERSION = '0.1.0';
